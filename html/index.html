@@ -1,50 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocktail Finder</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Cocktail Finder</title>
+  <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Cocktail Finder</h1>
-        
-        <div class="row mb-4">
-            <!-- Ingredient Search -->
-            <div class="col-md-4">
-                <label for="ingredient" class="form-label">Search by Ingredient</label>
-                <select id="ingredient" class="form-select">
-                    <option value="Gin">Gin</option>
-                    <!-- You can dynamically populate more options if needed -->
-                </select>
-            </div>
+  <header>
+    <h1>Cocktail Finder</h1>
+  </header>
 
-            <!-- Type Search -->
-            <div class="col-md-4">
-                <label for="type" class="form-label">Type</label>
-                <select id="type" class="form-select">
-                    <option value="Alcoholic">Alcoholic</option>
-                    <option value="Non_Alcoholic">Non-Alcoholic</option>
-                </select>
-            </div>
+  <!-- Search by Ingredient -->
+  <section class="search-container">
+    <label for="ingredient">Search by Ingredient:</label>
+    <select id="ingredient">
+      <!-- The options will be populated dynamically from the API -->
+    </select>
+  </section>
 
-            <!-- Name Search -->
-            <div class="col-md-4">
-                <label for="name" class="form-label">Search by Name</label>
-                <input type="text" id="name" class="form-control" placeholder="Enter cocktail name">
-            </div>
-        </div>
+  <!-- Search by Type -->
+  <section class="search-container">
+    <label for="type">Search by Type:</label>
+    <select id="type">
+      <option value="Alcoholic">Alcoholic</option>
+      <option value="Non_Alcoholic">Non Alcoholic</option>
+    </select>
+  </section>
 
-        <div class="text-center">
-            <button id="searchBtn" class="btn btn-primary">Search</button>
-        </div>
+  <!-- Search by Name -->
+  <section class="search-container">
+    <label for="cocktailName">Search by Cocktail Name:</label>
+    <input type="text" id="cocktailName" placeholder="Enter cocktail name...">
+    <button id="searchByName">Search</button>
+  </section>
 
-        <!-- Results Section -->
-        <div id="results" class="row mt-5"></div>
-    </div>
+  <!-- Results Container -->
+  <section class="results-container" id="resultsContainer">
+    <!-- Results will appear here -->
+  </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js"></script>
+  <script src="../js/script.js"></script>
 </body>
 </html>

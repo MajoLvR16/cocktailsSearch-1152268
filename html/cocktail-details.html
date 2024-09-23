@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Cóctel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <div class="d-flex justify-content-between">
+            <button onclick="window.history.back();" class="btn btn-light ml-3">Volver</button>
+            <h1 class="mx-auto">Detalles del Cóctel</h1>
+            <a href="index.html" class="btn btn-light mr-3">Menú Principal</a>
+        </div>
+    </header>
+    <div class="container mt-4">
+        <div id="cocktailDetailsContainer" class="row"></div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cocktailId = urlParams.get('id');
+
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${cocktailId}`)
+            .then(response => response.json())
+            .then(data => {
+                const cocktail = data.drinks[0];
+                const detailsContainer = document.getElementById('cocktailDetailsContainer');
+                detailsContainer.innerHTML = `
+                    <div class="col-md-6 offset-md-3 text-center">
+                        <div class="card mb-4">
+                            <img src="${cocktail.strDrinkThumb}" class="card-img-top" alt="${cocktail.strDrink}">
+                            <div class="card-body">
+                                <h2 class="card-title">${cocktail.strDrink}</h2>
+                                <p class="card-text"><strong>Tipo:</strong> ${cocktail.strAlcoholic}</p>
+                                <p class="card-text"><strong>Instrucciones:</strong> ${cocktail.strInstructions}</p>
+                                <p class="card-text"><strong>Ingredientes:</strong></p>
+                                <ul class="list-group mb-4">
+                                    ${Object.keys(cocktail)
+                                        .filter(key => key.startsWith('strIngredient') && cocktail[key])
+                                        .map(key => `
+                                            <li class="list-group-item">
+                                                <a href="ingredient-details.html?i=${cocktail[`strIngredient${key.slice(-1)}`]}">
+                                                    ${cocktail[`strIngredient${key.slice(-1)}`]} 
+                                                    <img src="https://www.thecocktaildb.com/images/ingredients/${cocktail[`strIngredient${key.slice(-1)}`]}-Medium.png" alt="${cocktail[`strIngredient${key.slice(-1)}`]}" style="width: 30px; margin-left: 10px;">
+                                                </a>
+                                            </li>
+                                        `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            })
+            .catch(error => console.error('Error fetching cocktail details:', error));
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Ingrediente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <div class="d-flex justify-content-between">
+            <button onclick="window.history.back();" class="btn btn-light ml-3">Volver</button>
+            <h1 class="mx-auto">Detalles del Ingrediente</h1>
+            <a href="index.html" class="btn btn-light mr-3">Menú Principal</a>
+        </div>
+    </header>
+    <div class="container mt-4">
+        <div id="ingredientDetailsContainer" class="row"></div>
+        <div id="cocktailsByIngredientContainer" class="row mt-4"></div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const ingredientName = urlParams.get('i');
+
+        // Fetch details about the ingredient
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredientName}`)
+            .then(response => response.json())
+            .then(data => {
+                const ingredient = data.ingredients[0];
+                const detailsContainer = document.getElementById('ingredientDetailsContainer');
+                
+                detailsContainer.innerHTML = `
+                    <div class="col-md-6 offset-md-3 text-center">
+                        <div class="card mb-4">
+                            <img src="https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png" class="card-img-top" alt="${ingredient.strIngredient}">
+                            <div class="card-body">
+                                <h2 class="card-title">${ingredient.strIngredient}</h2>
+                                <p class="card-text"><strong>Descripción:</strong> ${ingredient.strDescription || 'No disponible.'}</p>
+                                <p class="card-text"><strong>Tipo:</strong> ${ingredient.strType || 'No especificado'}</p>
+                                <p class="card-text"><strong>ABV (Alcohol por Volumen):</strong> ${ingredient.strABV || 'No especificado'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Fetch cocktails that use the ingredient
+                fetchCocktailsByIngredient(ingredient.strIngredient);
+            })
+            .catch(error => console.error('Error fetching ingredient details:', error));
+
+        function fetchCocktailsByIngredient(ingredientName) {
+            fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientName}`)
+                .then(response => response.json())
+                .then(data => {
+                    const cocktailsContainer = document.getElementById('cocktailsByIngredientContainer');
+                    cocktailsContainer.innerHTML = `<h3 class="col-12 text-center mb-4">Cócteles con ${ingredientName}:</h3>`;
+
+                    if (data.drinks) {
+                        data.drinks.forEach(drink => {
+                            cocktailsContainer.innerHTML += `
+                                <div class="col-md-4">
+                                    <div class="card mb-4">
+                                        <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${drink.strDrink}">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">${drink.strDrink}</h5>
+                                            <a href="cocktail-details.html?id=${drink.idDrink}" class="btn btn-primary">Ver detalles</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        cocktailsContainer.innerHTML = '<p class="col-12 text-center">No se encontraron cócteles con este ingrediente.</p>';
+                    }
+                })
+                .catch(error => console.error('Error fetching cocktails by ingredient:', error));
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
