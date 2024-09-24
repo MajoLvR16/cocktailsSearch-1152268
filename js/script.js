@@ -78,6 +78,8 @@ document.getElementById('type').addEventListener('change', function() {
   document.getElementById('cocktailResults').innerHTML = '';
 });
 
+
+
 document.getElementById('ingredient').addEventListener('change', function() {
   document.getElementById('cocktailResults').innerHTML = '';
 });
