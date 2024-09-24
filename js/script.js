@@ -31,7 +31,7 @@ function displayCocktails(drinks) {
         <div class="card-body d-flex flex-column justify-content-between">
           <h5 class="card-title">${drink.strDrink}</h5>
           <p class="card-text">Type: ${drink.strAlcoholic || 'N/A'}</p>
-          <a href="cocktail-details.html?id=${drink.idDrink}" class="btn btn-neon mt-2">View Details</a>
+          <a href="html/cocktail-details.html?id=${drink.idDrink}" class="btn btn-neon mt-2">View Details</a>
         </div>
       </div>
     `;
@@ -40,46 +40,33 @@ function displayCocktails(drinks) {
 }
 
 // Search cocktails by name, type, or ingredient based on priority
-document.getElementById('searchByName').addEventListener('click', function() {
+function searchCocktails() {
   const cocktailName = document.getElementById('cocktailName').value.trim();
   const selectedType = document.getElementById('type').value;
   const selectedIngredient = document.getElementById('ingredient').value;
 
+  let endpoint;
+
   if (cocktailName) {
-    const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`;
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => displayCocktails(data.drinks))
-      .catch(error => console.error('Error fetching cocktails by name:', error));
+    endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`;
   } else if (selectedType) {
-    const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${selectedType}`;
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => displayCocktails(data.drinks))
-      .catch(error => console.error('Error fetching cocktails by type:', error));
+    endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${selectedType}`;
   } else if (selectedIngredient) {
-    const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${selectedIngredient}`;
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(data => displayCocktails(data.drinks))
-      .catch(error => console.error('Error fetching cocktails by ingredient:', error));
+    endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${selectedIngredient}`;
   } else {
     const resultsContainer = document.getElementById('cocktailResults');
     resultsContainer.innerHTML = '<p class="col-12 text-center">Please enter a name, select a type, or choose an ingredient.</p>';
+    return;
   }
-});
 
-// Clear the results when input changes
-document.getElementById('cocktailName').addEventListener('input', function() {
-  document.getElementById('cocktailResults').innerHTML = '';
-});
+  fetch(endpoint)
+    .then(response => response.json())
+    .then(data => displayCocktails(data.drinks))
+    .catch(error => console.error('Error fetching cocktails:', error));
+}
 
-document.getElementById('type').addEventListener('change', function() {
-  document.getElementById('cocktailResults').innerHTML = '';
-});
-
-
-
-document.getElementById('ingredient').addEventListener('change', function() {
-  document.getElementById('cocktailResults').innerHTML = '';
-});
+// Add event listeners
+document.getElementById('searchByName').addEventListener('click', searchCocktails);
+document.getElementById('cocktailName').addEventListener('input', searchCocktails);
+document.getElementById('type').addEventListener('change', searchCocktails);
+document.getElementById('ingredient').addEventListener('change', searchCocktails);

@@ -10,7 +10,7 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   
@@ -26,6 +26,7 @@
         <section class="search-container mb-4">
           <label for="ingredient" class="form-label">Search by Ingredient:</label>
           <select id="ingredient" class="form-control">
+            <option value="">Select an ingredient</option>
             <!-- The options will be populated dynamically from the API -->
           </select>
         </section>
@@ -36,6 +37,7 @@
         <section class="search-container mb-4">
           <label for="type" class="form-label">Search by Type:</label>
           <select id="type" class="form-control">
+            <option value="">Select a type</option>
             <option value="Alcoholic">Alcoholic</option>
             <option value="Non_Alcoholic">Non Alcoholic</option>
           </select>
@@ -69,8 +71,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <!-- Custom JS -->
-  <script src="../js/script.js"></script>
-
-  
+  <script src="js/script.js"></script>
 </body>
-</html>    
+</html>
