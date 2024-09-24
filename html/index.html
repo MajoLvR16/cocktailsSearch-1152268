@@ -5,42 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Cocktail Finder</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Cocktail Finder</h1>
+  
+  <!-- Header -->
+  <header class="text-center py-4 mb-4">
+    <h1 class="text-neon">Cocktail Finder</h1>
   </header>
 
-  <!-- Search by Ingredient -->
-  <section class="search-container">
-    <label for="ingredient">Search by Ingredient:</label>
-    <select id="ingredient">
-      <!-- The options will be populated dynamically from the API -->
-    </select>
-  </section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <!-- Search by Ingredient -->
+        <section class="search-container mb-4">
+          <label for="ingredient" class="form-label">Search by Ingredient:</label>
+          <select id="ingredient" class="form-control">
+            <!-- The options will be populated dynamically from the API -->
+          </select>
+        </section>
+      </div>
+      
+      <div class="col-md-4">
+        <!-- Search by Type -->
+        <section class="search-container mb-4">
+          <label for="type" class="form-label">Search by Type:</label>
+          <select id="type" class="form-control">
+            <option value="Alcoholic">Alcoholic</option>
+            <option value="Non_Alcoholic">Non Alcoholic</option>
+          </select>
+        </section>
+      </div>
+      
+      <div class="col-md-4">
+        <!-- Search by Name -->
+        <section class="search-container mb-4">
+          <label for="cocktailName" class="form-label">Search by Cocktail Name:</label>
+          <div class="input-group">
+            <input type="text" id="cocktailName" class="form-control" placeholder="Enter cocktail name...">
+            <div class="input-group-append">
+              <button id="searchByName" class="btn btn-neon">Search</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
-  <!-- Search by Type -->
-  <section class="search-container">
-    <label for="type">Search by Type:</label>
-    <select id="type">
-      <option value="Alcoholic">Alcoholic</option>
-      <option value="Non_Alcoholic">Non Alcoholic</option>
-    </select>
-  </section>
+    <!-- Results Container -->
+    <section class="results-container mt-4" id="resultsContainer">
+      <!-- Results will appear here in a grid layout -->
+      <div class="row" id="cocktailResults"></div>
+    </section>
+  </div>
 
-  <!-- Search by Name -->
-  <section class="search-container">
-    <label for="cocktailName">Search by Cocktail Name:</label>
-    <input type="text" id="cocktailName" placeholder="Enter cocktail name...">
-    <button id="searchByName">Search</button>
-  </section>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <!-- Results Container -->
-  <section class="results-container" id="resultsContainer">
-    <!-- Results will appear here -->
-  </section>
-
+  <!-- Custom JS -->
   <script src="../js/script.js"></script>
 </body>
 </html>

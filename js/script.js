@@ -14,24 +14,26 @@ fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
 
 // Function to display cocktails in the results container
 function displayCocktails(drinks) {
-  const resultsContainer = document.getElementById('resultsContainer');
+  const resultsContainer = document.getElementById('cocktailResults');
   resultsContainer.innerHTML = '';
 
   if (!drinks) {
-    resultsContainer.innerHTML = '<p>No results found</p>';
+    resultsContainer.innerHTML = '<p class="col-12 text-center">No results found</p>';
     return;
   }
 
   drinks.forEach(drink => {
     const cocktailCard = document.createElement('div');
-    cocktailCard.classList.add('cocktail-card');
+    cocktailCard.className = 'col-md-4 mb-4';
     cocktailCard.innerHTML = `
-      <a href="cocktail-details.html?id=${drink.idDrink}" class="cocktail-link">
-        <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
-        <h3>${drink.strDrink}</h3>
-        <p>Type: ${drink.strAlcoholic}</p>
-        <p>${drink.strDescription ? drink.strDescription : "No description available."}</p>
-      </a>
+      <div class="card h-100">
+        <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${drink.strDrink}">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title">${drink.strDrink}</h5>
+          <p class="card-text">Type: ${drink.strAlcoholic || 'N/A'}</p>
+          <a href="cocktail-details.html?id=${drink.idDrink}" class="btn btn-neon mt-2">View Details</a>
+        </div>
+      </div>
     `;
     resultsContainer.appendChild(cocktailCard);
   });
@@ -62,20 +64,20 @@ document.getElementById('searchByName').addEventListener('click', function() {
       .then(data => displayCocktails(data.drinks))
       .catch(error => console.error('Error fetching cocktails by ingredient:', error));
   } else {
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = '<p>Please enter a name, select a type, or choose an ingredient.</p>';
+    const resultsContainer = document.getElementById('cocktailResults');
+    resultsContainer.innerHTML = '<p class="col-12 text-center">Please enter a name, select a type, or choose an ingredient.</p>';
   }
 });
 
 // Clear the results when input changes
 document.getElementById('cocktailName').addEventListener('input', function() {
-  document.getElementById('resultsContainer').innerHTML = '';
+  document.getElementById('cocktailResults').innerHTML = '';
 });
 
 document.getElementById('type').addEventListener('change', function() {
-  document.getElementById('resultsContainer').innerHTML = '';
+  document.getElementById('cocktailResults').innerHTML = '';
 });
 
 document.getElementById('ingredient').addEventListener('change', function() {
-  document.getElementById('resultsContainer').innerHTML = '';
+  document.getElementById('cocktailResults').innerHTML = '';
 });

@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <header class="bg-primary text-white text-center py-4">
-        <div class="d-flex justify-content-between">
-            <button onclick="window.history.back();" class="btn btn-light ml-3">Volver</button>
+    <header class="text-center py-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <button onclick="window.history.back();" class="btn btn-neon ml-3">Volver</button>
             <h1 class="mx-auto">Detalles del Ingrediente</h1>
-            <a href="index.html" class="btn btn-light mr-3">Menú Principal</a>
+            <a href="index.html" class="btn btn-neon mr-3">Menú Principal</a>
         </div>
     </header>
     <div class="container mt-4">
@@ -32,9 +32,9 @@
                 const detailsContainer = document.getElementById('ingredientDetailsContainer');
                 
                 detailsContainer.innerHTML = `
-                    <div class="col-md-6 offset-md-3 text-center">
+                    <div class="col-md-8 offset-md-2 text-center">
                         <div class="card mb-4">
-                            <img src="https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png" class="card-img-top" alt="${ingredient.strIngredient}">
+                            <img src="https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient}-Medium.png" class="card-img-top" alt="${ingredient.strIngredient}" style="max-height: 300px; object-fit: contain; background-color: #1c1c1c;">
                             <div class="card-body">
                                 <h2 class="card-title">${ingredient.strIngredient}</h2>
                                 <p class="card-text"><strong>Descripción:</strong> ${ingredient.strDescription || 'No disponible.'}</p>
@@ -60,12 +60,12 @@
                     if (data.drinks) {
                         data.drinks.forEach(drink => {
                             cocktailsContainer.innerHTML += `
-                                <div class="col-md-4">
-                                    <div class="card mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100">
                                         <img src="${drink.strDrinkThumb}" class="card-img-top" alt="${drink.strDrink}">
-                                        <div class="card-body text-center">
+                                        <div class="card-body text-center d-flex flex-column justify-content-between">
                                             <h5 class="card-title">${drink.strDrink}</h5>
-                                            <a href="cocktail-details.html?id=${drink.idDrink}" class="btn btn-primary">Ver detalles</a>
+                                            <a href="cocktail-details.html?id=${drink.idDrink}" class="btn btn-neon mt-2">Ver detalles</a>
                                         </div>
                                     </div>
                                 </div>
